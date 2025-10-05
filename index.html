@@ -6,6 +6,7 @@
     <title>Thiệp Cưới - Bùi Đức Hòa & Nguyễn Diệu Hương</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Cormorant+Garamond:wght@300;400;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    
     <style>
         @keyframes fadeInUp {
             from {
@@ -26,22 +27,6 @@
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
-        }
-        
-        @keyframes fall {
-            0% {
-                transform: translateY(-100vh) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
-        
-        @keyframes sway {
-            0%, 100% { transform: translateX(0px); }
-            50% { transform: translateX(30px); }
         }
         
         .animate-fadeInUp {
@@ -86,124 +71,12 @@
             border-color: #ef4444;
         }
         
-        .falling-hearts {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 50;
-        }
-        
-        .heart {
-            position: absolute;
-            color: #dc2626;
-            animation: fall linear infinite;
-            font-size: 20px;
-        }
-        
-        /* Mobile: Hearts spread across full width (0-100%) */
-        .heart:nth-child(1) { left: 10%; animation-duration: 3s; animation-delay: 0s; }
-        .heart:nth-child(2) { left: 20%; animation-duration: 4s; animation-delay: 1s; }
-        .heart:nth-child(3) { left: 30%; animation-duration: 5s; animation-delay: 2s; }
-        .heart:nth-child(4) { left: 40%; animation-duration: 3.5s; animation-delay: 0.5s; }
-        .heart:nth-child(5) { left: 50%; animation-duration: 4.5s; animation-delay: 1.5s; }
-        .heart:nth-child(6) { left: 60%; animation-duration: 3s; animation-delay: 2.5s; }
-        .heart:nth-child(7) { left: 70%; animation-duration: 4s; animation-delay: 0.8s; }
-        .heart:nth-child(8) { left: 80%; animation-duration: 5s; animation-delay: 1.2s; }
-        .heart:nth-child(9) { left: 90%; animation-duration: 3.5s; animation-delay: 2.8s; }
-        .heart:nth-child(10) { left: 15%; animation-duration: 4.2s; animation-delay: 0.3s; }
-        .heart:nth-child(11) { left: 75%; animation-duration: 3.8s; animation-delay: 1.8s; }
 
-        /* Desktop: Hearts concentrated in center (40-60%) */
-        @media (min-width: 768px) {
-            .heart:nth-child(1) { left: 40%; }
-            .heart:nth-child(2) { left: 42%; }
-            .heart:nth-child(3) { left: 44%; }
-            .heart:nth-child(4) { left: 46%; }
-            .heart:nth-child(5) { left: 48%; }
-            .heart:nth-child(6) { left: 50%; }
-            .heart:nth-child(7) { left: 52%; }
-            .heart:nth-child(8) { left: 54%; }
-            .heart:nth-child(9) { left: 56%; }
-            .heart:nth-child(10) { left: 58%; }
-            .heart:nth-child(11) { left: 60%; }
-        }
-
-        
-        .heart.small { font-size: 14px; }
-        .heart.medium { font-size: 18px; }
-        .heart.large { font-size: 24px; }
-        
-        /* Calendar Styles */
-        .calendar {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-        
-        .calendar-header {
-            background: linear-gradient(135deg, #dc2626, #b91c1c);
-            color: white;
-            padding: 1rem;
-            text-align: center;
-        }
-        
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 1px;
-            background: #f3f4f6;
-        }
-        
-        .calendar-day-header {
-            background: #fef2f2;
-            color: #991b1b;
-            padding: 0.5rem;
-            text-align: center;
-            font-weight: 600;
-            font-size: 0.75rem;
-        }
-        
-        .calendar-day {
-            background: white;
-            padding: 0.75rem 0.5rem;
-            text-align: center;
-            min-height: 2.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.875rem;
-            transition: all 0.2s ease;
-        }
-        
-        .calendar-day.other-month {
-            color: #d1d5db;
-            background: #f9fafb;
-        }
-        
-        .calendar-day.wedding-day {
-            background: linear-gradient(135deg, #dc2626, #b91c1c);
-            color: white;
-            font-weight: bold;
-            position: relative;
-            transform: scale(1.1);
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
-        }
-        
-        .calendar-day.wedding-day::after {
-            content: '💕';
-            position: absolute;
-            top: -2px;
-            right: -2px;
-            font-size: 12px;
-        }
         
         .opacity-0 { opacity: 0; }
     </style>
+    <link rel="stylesheet" href="styles/hearts.css">
+    <link rel="stylesheet" href="styles/calendar.css">
 </head>
 <body class="gradient-red min-h-screen overflow-x-hidden">
     <!-- Falling Hearts Animation -->
@@ -261,7 +134,7 @@
                                 <div class="absolute inset-2 rounded-full border-2 border-red-200 bg-white flex items-center justify-center overflow-hidden">
                                     
                                     <!-- To use actual photo, replace the div above with: -->
-                                    <img src="hoa_portrait.JPG" alt="Chú rể" class="w-full h-full object-cover">
+                                    <img src="images/hoa_portrait.JPG" alt="Chú rể" class="w-full h-full object-cover">
                                 </div>
                                 <!-- Decorative corner elements -->
                                 <div class="absolute -top-2 -right-2 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center">
@@ -298,7 +171,7 @@
                                     <!-- Placeholder for bride photo -->
                                     
                                     <!-- To use actual photo, replace the div above with: -->
-                                    <img src="huong_portrait.jpg" alt="Cô dâu" class="w-full h-full object-cover">
+                                    <img src="images/huong_portrait.jpg" alt="Cô dâu" class="w-full h-full object-cover">
                                 </div>
                                 <!-- Decorative corner elements -->
                                 <div class="absolute -top-2 -left-2 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center">
@@ -481,48 +354,9 @@
                     ticking = true;
                 }
             });
-
-            // Create additional falling hearts on click/touch
-            function createFallingHeart(x, y) {
-                const heart = document.createElement('div');
-                const hearts = ['💕', '❤️', '💖', '💗', '💝', '💘'];
-                heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
-                heart.className = 'heart';
-                heart.style.left = x + 'px';
-                heart.style.top = y + 'px';
-                heart.style.position = 'fixed';
-                heart.style.pointerEvents = 'none';
-                heart.style.fontSize = (Math.random() * 10 + 15) + 'px';
-                heart.style.animationDuration = (Math.random() * 2 + 2) + 's';
-                heart.style.zIndex = '1000';
-                
-                document.body.appendChild(heart);
-                
-                // Remove heart after animation
-                setTimeout(() => {
-                    if (heart.parentNode) {
-                        heart.parentNode.removeChild(heart);
-                    }
-                }, 4000);
-            }
-
-            // Add click/touch events to create hearts
-            document.addEventListener('click', function(e) {
-                createFallingHeart(e.clientX, e.clientY);
-            });
-
-            document.addEventListener('touchstart', function(e) {
-                e.preventDefault();
-                const touch = e.touches[0];
-                createFallingHeart(touch.clientX, touch.clientY);
-            });
-
-            // Auto-create random hearts periodically
-            setInterval(() => {
-                const x = Math.random() * window.innerWidth;
-                createFallingHeart(x, -50);
-            }, 3000);
         });
     </script>
+    <!-- This script adds the falling hearts effect -->
+    <script src="scripts/hearts.js"></script>
 </body>
 </html>
