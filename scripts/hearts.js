@@ -37,11 +37,12 @@ class FallingHearts {
         });
 
         // Touch events cho mobile
-        document.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            const touch = e.touches[0];
-            this.createInteractiveHeart(touch.clientX, touch.clientY);
-        }, { passive: false });
+        // TODO: Fix issue with mobile unable to scroll
+        // document.addEventListener('touchstart', (e) => {
+        //     e.preventDefault();
+        //     const touch = e.touches[0];
+        //     this.createInteractiveHeart(touch.clientX, touch.clientY);
+        // }, { passive: false });
 
         // Keyboard support
         document.addEventListener('keydown', (e) => {
