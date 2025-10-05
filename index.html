@@ -103,22 +103,104 @@
             font-size: 20px;
         }
         
-        .heart:nth-child(1) { left: 40%; animation-duration: 3s; animation-delay: 0s; }
-        .heart:nth-child(2) { left: 42%; animation-duration: 4s; animation-delay: 1s; }
-        .heart:nth-child(3) { left: 44%; animation-duration: 5s; animation-delay: 2s; }
-        .heart:nth-child(4) { left: 46%; animation-duration: 3.5s; animation-delay: 0.5s; }
-        .heart:nth-child(5) { left: 48%; animation-duration: 4.5s; animation-delay: 1.5s; }
-        .heart:nth-child(6) { left: 50%; animation-duration: 3s; animation-delay: 2.5s; }
-        .heart:nth-child(7) { left: 52%; animation-duration: 4s; animation-delay: 0.8s; }
-        .heart:nth-child(8) { left: 54%; animation-duration: 5s; animation-delay: 1.2s; }
-        .heart:nth-child(9) { left: 56%; animation-duration: 3.5s; animation-delay: 2.8s; }
-        .heart:nth-child(10) { left: 58%; animation-duration: 4.2s; animation-delay: 0.3s; }
-        .heart:nth-child(11) { left: 60%; animation-duration: 4.2s; animation-delay: 0.3s; }
+        /* Mobile: Hearts spread across full width (0-100%) */
+        .heart:nth-child(1) { left: 10%; animation-duration: 3s; animation-delay: 0s; }
+        .heart:nth-child(2) { left: 20%; animation-duration: 4s; animation-delay: 1s; }
+        .heart:nth-child(3) { left: 30%; animation-duration: 5s; animation-delay: 2s; }
+        .heart:nth-child(4) { left: 40%; animation-duration: 3.5s; animation-delay: 0.5s; }
+        .heart:nth-child(5) { left: 50%; animation-duration: 4.5s; animation-delay: 1.5s; }
+        .heart:nth-child(6) { left: 60%; animation-duration: 3s; animation-delay: 2.5s; }
+        .heart:nth-child(7) { left: 70%; animation-duration: 4s; animation-delay: 0.8s; }
+        .heart:nth-child(8) { left: 80%; animation-duration: 5s; animation-delay: 1.2s; }
+        .heart:nth-child(9) { left: 90%; animation-duration: 3.5s; animation-delay: 2.8s; }
+        .heart:nth-child(10) { left: 15%; animation-duration: 4.2s; animation-delay: 0.3s; }
+        .heart:nth-child(11) { left: 75%; animation-duration: 3.8s; animation-delay: 1.8s; }
+
+        /* Desktop: Hearts concentrated in center (40-60%) */
+        @media (min-width: 768px) {
+            .heart:nth-child(1) { left: 40%; }
+            .heart:nth-child(2) { left: 42%; }
+            .heart:nth-child(3) { left: 44%; }
+            .heart:nth-child(4) { left: 46%; }
+            .heart:nth-child(5) { left: 48%; }
+            .heart:nth-child(6) { left: 50%; }
+            .heart:nth-child(7) { left: 52%; }
+            .heart:nth-child(8) { left: 54%; }
+            .heart:nth-child(9) { left: 56%; }
+            .heart:nth-child(10) { left: 58%; }
+            .heart:nth-child(11) { left: 60%; }
+        }
 
         
         .heart.small { font-size: 14px; }
         .heart.medium { font-size: 18px; }
         .heart.large { font-size: 24px; }
+        
+        /* Calendar Styles */
+        .calendar {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .calendar-header {
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            background: #f3f4f6;
+        }
+        
+        .calendar-day-header {
+            background: #fef2f2;
+            color: #991b1b;
+            padding: 0.5rem;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.75rem;
+        }
+        
+        .calendar-day {
+            background: white;
+            padding: 0.75rem 0.5rem;
+            text-align: center;
+            min-height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
+        }
+        
+        .calendar-day.other-month {
+            color: #d1d5db;
+            background: #f9fafb;
+        }
+        
+        .calendar-day.wedding-day {
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            color: white;
+            font-weight: bold;
+            position: relative;
+            transform: scale(1.1);
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+        }
+        
+        .calendar-day.wedding-day::after {
+            content: '💕';
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            font-size: 12px;
+        }
         
         .opacity-0 { opacity: 0; }
     </style>
@@ -140,9 +222,7 @@
     </div>
 
     <!-- Background Pattern -->
-    <div class="fixed inset-0 opacity-10">
-        <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,<svg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\"><g fill=\"%23ffffff\" fill-opacity=\"0.1\"><circle cx=\"30\" cy=\"30\" r=\"4\"/></g></g></svg>'); background-size: 60px 60px;"></div>
-    </div>
+
 
     <!-- Main Container -->
     <div class="relative z-10 min-h-screen flex items-center justify-center px-4 py-8">
@@ -278,6 +358,79 @@
                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
                         </svg>
+                    </div>
+                </div>
+
+                <!-- Wedding Calendar -->
+                <div class="calendar opacity-0 animate-fadeInUp delay-1000">
+                    <!-- Calendar Header -->
+                    <div class="calendar-header">
+                        <h3 class="font-cormorant text-xl font-bold mb-1">Tháng 1, 2026</h3>
+                        <p class="font-dancing text-sm opacity-90">Tháng của hạnh phúc 💕</p>
+                    </div>
+                    
+                    <!-- Calendar Grid -->
+                    <div class="calendar-grid">
+                        <!-- Day Headers -->
+                        <div class="calendar-day-header font-cormorant">CN</div>
+                        <div class="calendar-day-header font-cormorant">T2</div>
+                        <div class="calendar-day-header font-cormorant">T3</div>
+                        <div class="calendar-day-header font-cormorant">T4</div>
+                        <div class="calendar-day-header font-cormorant">T5</div>
+                        <div class="calendar-day-header font-cormorant">T6</div>
+                        <div class="calendar-day-header font-cormorant">T7</div>
+                        
+                        <!-- Week 1 (Dec 28 - Jan 4) -->
+                        <div class="calendar-day other-month">28</div>
+                        <div class="calendar-day other-month">29</div>
+                        <div class="calendar-day other-month">30</div>
+                        <div class="calendar-day other-month">31</div>
+                        <div class="calendar-day">1</div>
+                        <div class="calendar-day">2</div>
+                        <div class="calendar-day">3</div>
+                        
+                        <!-- Week 2 (Jan 4 - Jan 11) -->
+                        <div class="calendar-day wedding-day font-bold">4</div>
+                        <div class="calendar-day">5</div>
+                        <div class="calendar-day">6</div>
+                        <div class="calendar-day">7</div>
+                        <div class="calendar-day">8</div>
+                        <div class="calendar-day">9</div>
+                        <div class="calendar-day">10</div>
+                        
+                        <!-- Week 3 (Jan 11 - Jan 18) -->
+                        <div class="calendar-day">11</div>
+                        <div class="calendar-day">12</div>
+                        <div class="calendar-day">13</div>
+                        <div class="calendar-day">14</div>
+                        <div class="calendar-day">15</div>
+                        <div class="calendar-day">16</div>
+                        <div class="calendar-day">17</div>
+                        
+                        <!-- Week 4 (Jan 18 - Jan 25) -->
+                        <div class="calendar-day">18</div>
+                        <div class="calendar-day">19</div>
+                        <div class="calendar-day">20</div>
+                        <div class="calendar-day">21</div>
+                        <div class="calendar-day">22</div>
+                        <div class="calendar-day">23</div>
+                        <div class="calendar-day">24</div>
+                        
+                        <!-- Week 5 (Jan 25 - Feb 1) -->
+                        <div class="calendar-day">25</div>
+                        <div class="calendar-day">26</div>
+                        <div class="calendar-day">27</div>
+                        <div class="calendar-day">28</div>
+                        <div class="calendar-day">29</div>
+                        <div class="calendar-day">30</div>
+                        <div class="calendar-day">31</div>
+                    </div>
+                    
+                    <!-- Calendar Footer -->
+                    <div class="p-4 bg-red-50 text-center">
+                        <p class="font-cormorant text-sm text-red-700">
+                            📅 <strong>Ngày 04/01/2026</strong> - Ngày chúng ta bắt đầu hành trình mới
+                        </p>
                     </div>
                 </div>
 
