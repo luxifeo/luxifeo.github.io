@@ -78,8 +78,41 @@
     <link rel="stylesheet" href="styles/hearts.css">
     <link rel="stylesheet" href="styles/calendar.css">
     <link rel="stylesheet" href="styles/map.css">
+    <link rel="stylesheet" href="styles/music.css">
 </head>
 <body class="gradient-red min-h-screen overflow-x-hidden">
+    <!-- Music Player -->
+    <div class="music-player" id="musicPlayer" tabindex="0" role="button" aria-label="Phát nhạc nền">
+        <div class="music-info">
+            <div>🎵 KARIK - BẠN ĐỜI (ft. GDUCKY)</div>
+        </div>
+        
+        <!-- Volume Control -->
+        <div class="volume-control">
+            <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="70" aria-label="Điều chỉnh âm lượng">
+        </div>
+        
+        <!-- Play/Pause Icons -->
+        <svg class="music-icon play-icon" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+            <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/>
+        </svg>
+        
+        <svg class="music-icon pause-icon" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+            <path d="M5.75 3a.75.75 0 00-.75.75v12.5c0 .414.336.75.75.75h1.5a.75.75 0 00.75-.75V3.75A.75.75 0 007.25 3h-1.5zM12.75 3a.75.75 0 00-.75.75v12.5c0 .414.336.75.75.75h1.5a.75.75 0 00.75-.75V3.75a.75.75 0 00-.75-.75h-1.5z"/>
+        </svg>
+        
+        <!-- Progress Bar -->
+        <div class="music-progress">
+            <div class="music-progress-bar" id="progressBar"></div>
+        </div>
+    </div>
+
+    <!-- Audio Element -->
+    <audio id="backgroundMusic" preload="auto" loop>
+        <source src="assets/KARIK - BẠN ĐỜI (FT. GDUCKY) _ OFFICIAL MUSIC VIDEO.mp3" type="audio/mpeg">
+        Trình duyệt của bạn không hỗ trợ audio.
+    </audio>
+
     <!-- Falling Hearts Animation -->
     <div class="falling-hearts">
         <div class="heart small">💕</div>
@@ -384,12 +417,184 @@
 
             // Map loading functionality
             initializeMap();
+            
+            // Initialize music player
+            initializeMusicPlayer();
         });
+
+        // Music Player Functionality
+        function initializeMusicPlayer() {
+            const musicPlayer = document.getElementById('musicPlayer');
+            const backgroundMusic = document.getElementById('backgroundMusic');
+            const progressBar = document.getElementById('progressBar');
+            const volumeSlider = document.getElementById('volumeSlider');
+            
+            let isPlaying = false;
+            let isLoading = false;
+
+            // Set initial volume
+            backgroundMusic.volume = volumeSlider.value / 100;
+
+            // Music player click handler
+            musicPlayer.addEventListener('click', function(e) {
+                e.stopPropagation();
+                toggleMusic();
+            });
+
+            // Keyboard support
+            musicPlayer.addEventListener('keydown', function(e) {
+                if (e.key === ' ' || e.key === 'Enter') {
+                    e.preventDefault();
+                    toggleMusic();
+                }
+            });
+
+            // Volume control
+            volumeSlider.addEventListener('input', function() {
+                backgroundMusic.volume = this.value / 100;
+            });
+
+            // Toggle music function
+            function toggleMusic() {
+                if (isLoading) return;
+
+                if (isPlaying) {
+                    pauseMusic();
+                } else {
+                    playMusic();
+                }
+            }
+
+            // Play music
+            function playMusic() {
+                if (isLoading) return;
+                
+                isLoading = true;
+                musicPlayer.classList.add('loading');
+
+                const playPromise = backgroundMusic.play();
+
+                if (playPromise !== undefined) {
+                    playPromise
+                        .then(() => {
+                            isPlaying = true;
+                            isLoading = false;
+                            musicPlayer.classList.remove('loading');
+                            musicPlayer.classList.add('playing');
+                            
+                            // Start spinning animation
+                            const musicIcon = musicPlayer.querySelector('.music-icon');
+                            musicIcon.classList.add('spinning');
+                            
+                            // Start progress tracking
+                            updateProgress();
+                        })
+                        .catch(error => {
+                            console.log('Playback failed:', error);
+                            isLoading = false;
+                            musicPlayer.classList.remove('loading');
+                            showMusicError();
+                        });
+                }
+            }
+
+            // Pause music
+            function pauseMusic() {
+                backgroundMusic.pause();
+                isPlaying = false;
+                musicPlayer.classList.remove('playing');
+                
+                // Stop spinning animation
+                const musicIcon = musicPlayer.querySelector('.music-icon');
+                musicIcon.classList.remove('spinning');
+            }
+
+            // Update progress bar
+            function updateProgress() {
+                if (isPlaying && !backgroundMusic.paused) {
+                    const progress = (backgroundMusic.currentTime / backgroundMusic.duration) * 100;
+                    progressBar.style.width = progress + '%';
+                    
+                    requestAnimationFrame(updateProgress);
+                }
+            }
+
+            // Handle audio events
+            backgroundMusic.addEventListener('loadstart', function() {
+                isLoading = true;
+                musicPlayer.classList.add('loading');
+            });
+
+            backgroundMusic.addEventListener('canplay', function() {
+                isLoading = false;
+                musicPlayer.classList.remove('loading');
+            });
+
+            backgroundMusic.addEventListener('ended', function() {
+                // Song ended, restart (since loop is set)
+                isPlaying = false;
+                musicPlayer.classList.remove('playing');
+                const musicIcon = musicPlayer.querySelector('.music-icon');
+                musicIcon.classList.remove('spinning');
+                
+                // Auto restart
+                setTimeout(() => {
+                    playMusic();
+                }, 500);
+            });
+
+            backgroundMusic.addEventListener('error', function(e) {
+                console.error('Audio error:', e);
+                isLoading = false;
+                musicPlayer.classList.remove('loading');
+                showMusicError();
+            });
+
+            // Show error message
+            function showMusicError() {
+                const musicInfo = musicPlayer.querySelector('.music-info');
+                const originalText = musicInfo.innerHTML;
+                musicInfo.innerHTML = '<div style="color: #ef4444;">⚠️ Không thể phát nhạc</div>';
+                
+                setTimeout(() => {
+                    musicInfo.innerHTML = originalText;
+                }, 3000);
+            }
+
+            // Auto-play attempt (with user interaction fallback)
+            function attemptAutoPlay() {
+                // Try to autoplay when user first interacts with the page
+                const autoPlayHandler = function() {
+                    playMusic();
+                    document.removeEventListener('click', autoPlayHandler);
+                    document.removeEventListener('touchstart', autoPlayHandler);
+                    document.removeEventListener('keydown', autoPlayHandler);
+                };
+
+                document.addEventListener('click', autoPlayHandler, { once: true });
+                document.addEventListener('touchstart', autoPlayHandler, { once: true });
+                document.addEventListener('keydown', autoPlayHandler, { once: true });
+            }
+
+            // Initialize auto-play attempt
+            attemptAutoPlay();
+
+            // Prevent music from pausing when page loses focus (optional)
+            document.addEventListener('visibilitychange', function() {
+                if (document.hidden && isPlaying) {
+                    // Page is hidden, keep playing (browser may still pause)
+                } else if (!document.hidden && backgroundMusic.paused && isPlaying) {
+                    // Page is visible again, resume if it was playing
+                    playMusic();
+                }
+            });
+        }
 
 
     </script>
-    <!-- This script adds the falling hearts effect -->
+    <!-- This script initializes the Google Map -->
     <script src="scripts/map.js"></script>
+    <!-- This script adds the falling hearts effect -->
     <script src="scripts/hearts.js"></script>
 </body>
 </html>
