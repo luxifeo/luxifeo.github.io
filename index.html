@@ -77,6 +77,7 @@
     </style>
     <link rel="stylesheet" href="styles/hearts.css">
     <link rel="stylesheet" href="styles/calendar.css">
+    <link rel="stylesheet" href="styles/map.css">
 </head>
 <body class="gradient-red min-h-screen overflow-x-hidden">
     <!-- Falling Hearts Animation -->
@@ -122,7 +123,22 @@
 
             <!-- Main Content -->
             <div class="px-6 py-8 space-y-6">
-                
+                                <!-- Wedding Date -->
+                <div class="text-center bg-red-50 rounded-2xl p-6 border-2 border-red-200 opacity-0 animate-fadeInUp delay-1000">
+                    <div class="animate-float">
+                        <h3 class="font-cormorant text-xl font-semibold text-red-800 mb-3">
+                            Ngày trọng đại
+                        </h3>
+                        <div class="space-y-2">
+                            <p class="font-dancing text-3xl font-bold text-red-600">
+                                04 • 01 • 2026
+                            </p>
+                            <p class="font-cormorant text-lg text-red-700">
+                                Chủ Nhật
+                            </p>
+                        </div>
+                    </div>
+                </div>
                 <!-- Couple Photos -->
                 <div class="space-y-6">
                     <!-- Groom Photo -->
@@ -188,22 +204,7 @@
                     </div>
                 </div>
 
-                <!-- Wedding Date -->
-                <div class="text-center bg-red-50 rounded-2xl p-6 border-2 border-red-200 opacity-0 animate-fadeInUp delay-1000">
-                    <div class="animate-float">
-                        <h3 class="font-cormorant text-xl font-semibold text-red-800 mb-3">
-                            Ngày trọng đại
-                        </h3>
-                        <div class="space-y-2">
-                            <p class="font-dancing text-3xl font-bold text-red-600">
-                                04 • 01 • 2026
-                            </p>
-                            <p class="font-cormorant text-lg text-red-700">
-                                Chủ Nhật
-                            </p>
-                        </div>
-                    </div>
-                </div>
+
 
                 <!-- Message -->
                 <div class="text-center space-y-4 opacity-0 animate-fadeInUp delay-1000">
@@ -307,6 +308,32 @@
                     </div>
                 </div>
 
+                <!-- Wedding Location Map -->
+                <div class="map-container opacity-0 animate-fadeInUp delay-1000">
+                    <!-- Map Header -->
+                    <div class="map-header">
+                        <h3 class="font-cormorant text-xl font-bold mb-1">Địa điểm tổ chức</h3>
+                        <p class="font-dancing text-sm opacity-90">Nơi chúng ta gặp nhau 📍</p>
+                    </div>
+                    
+                    <!-- Google Maps -->
+                    <div class="map-content">
+                        <div id="map-loading" class="map-loading">
+                            <div class="loading-spinner"></div>
+                            <span class="ml-3">Đang tải bản đồ...</span>
+                        </div>
+                        <iframe 
+                            id="google-map"
+                            class="map-frame"
+                            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d937.6446451221362!2d105.88781484815449!3d20.897784116491977!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135b1efd42d00d5%3A0x6eb4c228d1458a9a!2zTmjDoCBUaOG7nSBnacOhbyBo4buNIFjDom0gRMawxqFuZw!5e1!3m2!1svi!2sus!4v1759656126782!5m2!1svi!2sus"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            style="display: none;">
+                        </iframe>
+                    </div>
+                </div>
+
             </div>
 
             <!-- Footer -->
@@ -354,9 +381,15 @@
                     ticking = true;
                 }
             });
+
+            // Map loading functionality
+            initializeMap();
         });
+
+
     </script>
     <!-- This script adds the falling hearts effect -->
+    <script src="scripts/map.js"></script>
     <script src="scripts/hearts.js"></script>
 </body>
 </html>
