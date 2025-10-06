@@ -140,7 +140,7 @@ class FallingHearts {
      */
     setupHeartInteractions() {
         // Thêm hiệu ứng click cho tất cả SVG hearts
-        const hearts = document.querySelectorAll('svg');
+        const hearts = document.querySelectorAll('svg.clickable-heart');
         hearts.forEach(heart => {
             heart.addEventListener('click', (e) => {
                 e.stopPropagation();
