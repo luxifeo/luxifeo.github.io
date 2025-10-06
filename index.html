@@ -6,7 +6,10 @@
     <title>Thiệp Cưới - Bùi Đức Hòa & Nguyễn Diệu Hương</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Cormorant+Garamond:wght@300;400;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
-    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery/css/lightgallery-bundle.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery/lightgallery.umd.js"></script>
+
+
     <style>
         @keyframes fadeInUp {
             from {
@@ -71,7 +74,24 @@
             border-color: #ef4444;
         }
         
+        #gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 columns */
+            gap: 10px; /* space between images */
+            max-width: 600px;
+            margin: auto;
+        }
 
+        #gallery a img {
+            width: 100%;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        #gallery a img:hover {
+            transform: scale(1.05);
+        }
         
         .opacity-0 { opacity: 0; }
     </style>
@@ -80,6 +100,7 @@
     <link rel="stylesheet" href="styles/map.css">
     <link rel="stylesheet" href="styles/music.css">
     <link rel="stylesheet" href="styles/rsvp.css">
+    <link rel="stylesheet" href="styles/album.css">
 </head>
 <body class="gradient-red min-h-screen overflow-x-hidden">
     <!-- Music Player -->
@@ -341,6 +362,28 @@
                         </p>
                     </div>
                 </div>
+
+                <!-- Wedding Album -->
+                <div class="wedding-album opacity-0 animate-fadeInUp delay-1000">
+                    <!-- Album Header -->
+                    <div class="album-header">
+                        <h3 class="album-title">Album Cưới</h3>
+                        <p class="album-subtitle">
+                            <span class="heart-decoration">💕</span>
+                            Những khoảnh khắc đẹp nhất của chúng tôi
+                            <span class="heart-decoration">💕</span>
+                        </p>
+                    </div>
+                    
+                     <div id="gallery">
+                        <a href="images/prewedding_images/anh1.jpg"><img src="images/prewedding_images/anh1.jpg" /></a>
+                        <a href="images/prewedding_images/anh2.jpg"><img src="images/prewedding_images/anh2.jpg" /></a>
+                        <a href="images/prewedding_images/anh3.jpg"><img src="images/prewedding_images/anh3.jpg" /></a>
+                        <a href="images/prewedding_images/anh4.jpg"><img src="images/prewedding_images/anh4.jpg" /></a>
+                    </div>
+
+                </div>
+
                 <!-- RSVP Form -->
                 <div class="rsvp-container animate-fadeInUp delay-1000">
                     <!-- RSVP Header -->
@@ -697,5 +740,14 @@
     <script src="scripts/map.js"></script>
     <!-- This script adds the falling hearts effect -->
     <script src="scripts/hearts.js"></script>
+    <!-- This script handles the wedding album animations -->
+    <!-- <script src="scripts/album.js"></script>
+      -->
+    <script>
+    lightGallery(document.getElementById('gallery'), {
+        thumbnail: true,
+        download: false
+    });
+    </script>
 </body>
 </html>
